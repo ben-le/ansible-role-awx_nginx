@@ -1,0 +1,60 @@
+---
+- name: Install nginx
+  apt:
+    name: nginx
+    state: latest
+  ignore_errors: yes
+
+- name: Create directories for nginx
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /var/log/nginx/sites/
+    - /etc/ssl/awx/
+
+- name: Copy over SSL private key for AWX
+  copy:
+    content: "{{ awx_nginx_ssl_key }}"
+    mode: 0600
+    dest: "{{ awx_nginx_ssl_key_path }}"
+  notify:
+    - reload nginx
+
+- name: Copy over SSL certificate for AWX
+  copy:
+    content: "{{ awx_nginx_ssl_cert }}"
+    mode: 0600
+    dest: "{{ awx_nginx_ssl_cert_path }}"
+  notify:
+    - reload nginx
+
+- name: Copy over awx nginx configuration
+  template:
+    src: awx_nginx.j2
+    dest: /etc/nginx/sites-available/awx.{{ inventory_hostname }}
+    backup: yes
+  register: __awx_nginx_config
+
+- name: Symlink awx nginx configuration
+  file:
+    src: /etc/nginx/sites-available/awx.{{ inventory_hostname }}
+    dest: /etc/nginx/sites-enabled/awx.{{ inventory_hostname }}
+    state: link
+
+- name: Remove nginx default file
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Validate nginx configuration
+  shell: /usr/sbin/nginx -t
+  notify:
+    - reload nginx
+  when: __awx_nginx_config.changed
+
+- name: Start and enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
