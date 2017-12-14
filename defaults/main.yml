@@ -34,7 +34,7 @@ awx_nginx_ssl_key: |
     yMdjeah1e5EQtmpCLW//a1fBj/PAsX+STorxLfldkh/RiTjIvn2BE4c20OM1PkXs
     vnK9DOvVX76aoyoPekg3NlyE+SXCxvo/PDKOb6TH0Zxs7dqutlo=
     -----END RSA PRIVATE KEY-----
-awx-nginx_ssl_cert: |
+awx_nginx_ssl_cert: |
     -----BEGIN CERTIFICATE-----
     MIIEFDCCAvygAwIBAgIRAPawX/F7sO1UYhq/oa9FcIwwDQYJKoZIhvcNAQELBQAw
     ejELMAkGA1UEBhMCVVMxFDASBgNVBAgTC0NhbGlmb3JuaW5hMREwDwYDVQQHEwhN
