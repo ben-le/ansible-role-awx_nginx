@@ -1,0 +1,7 @@
+- hosts: all
+  become: True
+  roles:
+    - lae.docker
+  vars:
+    docker_restart_on_upgrade: no
+    docker_compose_install: yes
