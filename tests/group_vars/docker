@@ -1,6 +1,7 @@
 - hosts: all
   become: True
   roles:
+    - azavea.pip
     - lae.docker
   vars:
     docker_restart_on_upgrade: no
