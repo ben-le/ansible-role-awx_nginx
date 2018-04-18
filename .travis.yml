@@ -18,6 +18,7 @@ before_cache:
 install:
 - sudo tar xf $HOME/lxc/cache.tar -C / || true
 - sudo apt-get install -y expect-dev
+- sudo apt-get install -y python-pip
 - pip install ansible
 - ansible --version
 - printf '[defaults]\nroles_path=../\ncallback_whitelist=profile_tasks\nforks=10\npipelining=True' >ansible.cfg
