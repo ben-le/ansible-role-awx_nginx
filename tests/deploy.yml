@@ -2,4 +2,4 @@
 - hosts: awx
   become: true
   roles: 
-    - ben.le.awx_nginx
+    - ben-le.awx_nginx
