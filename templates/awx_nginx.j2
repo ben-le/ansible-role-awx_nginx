@@ -18,7 +18,7 @@ server {
     server_name {{ awx_config.ALLOWED_HOSTS | join(" ") }};
 
     location / {
-     	proxy_pass http://{{ awx_host_port }};
+     	proxy_pass http://{{ host_port }};
 	include proxy_params;
         proxy_set_header   Upgrade            $http_upgrade;
         proxy_set_header   Connection         "upgrade";   
